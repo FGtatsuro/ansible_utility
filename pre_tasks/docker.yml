@@ -1,0 +1,20 @@
+---
+# pre-tasks with Docker connection
+# We don't use docker module because it requires that docker-py exists in library path of system python(=/usr/bin/python).
+# It's difficult to meet above requirement in any place.
+- block:
+  - name: Check target container runs
+    command: "docker exec {{ inventory_hostname }} pwd"
+    register: docker_status
+    # NOTE: These conditions will be affected by spec modifications of Docker error message.
+    failed_when: "'Cannot connect to the Docker daemon' in docker_status.stderr"
+    changed_when: no
+  - name: Clear not-running container
+    command: "docker rm {{ inventory_hostname }}"
+    when: "'is not running' in docker_status.stderr"
+  - name: Run target container
+    command: "docker run {{ utility_docker_extra_options|default('') }} -it -d --name {{ inventory_hostname }} {{ utility_docker_base_image }} /bin/sh"
+    when: "docker_status.rc != 0"
+  delegate_to: localhost
+  become: "{{ utility_docker_command_become|default(false)|bool }}"
+  when: "ansible_connection == 'docker'"

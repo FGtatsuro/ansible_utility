@@ -1,0 +1,2 @@
+---
+# post-tasks when gather_facts is no and specified ansible_connection isn't given

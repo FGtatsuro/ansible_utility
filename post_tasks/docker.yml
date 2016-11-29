@@ -1,0 +1,7 @@
+---
+# post-tasks with Docker connection
+- name: Commit provisioning container
+  command: "docker commit {{ inventory_hostname }} {{ utility_docker_commit_image }}"
+  delegate_to: localhost
+  become: "{{ utility_docker_command_become|default(false)|bool }}"
+  when: "ansible_connection == 'docker' and utility_docker_image_committed|default(true)|bool"
