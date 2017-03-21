@@ -64,6 +64,6 @@ Docker
 |name|description|type|default|note|
 |---|---|---|---|---|
 |inventory_hostname|Container with this value as container name is committed.|str|-|It's pre-defined Ansible from inventory file. Thus, we don't have to define it.|
-|utility_docker_command_become|If the value is yes/true, container is committed with sudo.|bool|false|This is needed when Docker command execution needs root access on localhost.|
+|utility_docker_command_become|If the value is yes/true, docker command is executed with sudo.|bool|false|This is needed when Docker command execution needs root access on localhost.|
 |utility_docker_commit_image|Container is committed with this value as image name.|str|-|In almost cases, it's better to define in inventory.|
 |utility_docker_image_committed|If the value is no/false, container is NOT committed.|str|true|This is useful when we develop provisioning code for time-saving. Commit process takes some times.<br>In this case, it's better to use this in Ansible `--extra-vars`.|
