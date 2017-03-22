@@ -1,0 +1,15 @@
+---
+- hosts: all
+  pre_tasks:
+    - set_fact:
+        utility_registry_url: "{{ utility_registry_url|default('localhost:5000') }}"
+        utility_docker_command_become: "{{ utility_docker_command_become|default(false) }}"
+  tasks:
+    - block:
+      - name: Pull a Docker image from given repository
+        command: docker pull {{ utility_registry_url }}/{{ utility_docker_image }}
+      - name: Create a tag not starting with repository url
+        command: docker tag {{ utility_registry_url }}/{{ utility_docker_image }} {{ utility_docker_image }}
+      - name: Remove a tag starting with repository url
+        command: docker rmi -f {{ utility_registry_url }}/{{ utility_docker_image }}
+      become: "{{ utility_docker_command_become|bool }}"
