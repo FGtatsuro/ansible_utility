@@ -6,6 +6,11 @@
         utility_docker_command_become: "{{ utility_docker_command_become|default(false) }}"
   tasks:
     - block:
+      - name: Login given registry
+        command: docker login --username {{ utility_docker_login_user }} --password-stdin {{ utility_registry_url }}
+        args:
+          stdin: "{{ utility_docker_login_password }}"
+        when: (utility_docker_login_user is defined) and (utility_docker_login_password is defined)
       - name: Pull a Docker image from given repository
         command: docker pull {{ utility_registry_url }}/{{ utility_docker_image }}
       - name: Create a tag not starting with repository url

@@ -88,6 +88,8 @@ $ ansible-playbook docker/push_image.yml -i tests/inventory/hosts -l test_host -
 |utility_registry_url|A repository url which a Docker image is pushed to.|localhost:5000||
 |utility_docker_image|a name of a target Docker image. This is a required variable.|It isn't defined in default.||
 |utility_docker_command_become|If the value is yes/true, docker command is executed with sudo.|bool|false|This is needed when Docker command execution needs root privilege.|
+|utility_docker_login_user|An username using 'docker login' command.|str|It isn't defined in default.||
+|utility_docker_login_password|A password using 'docker login' command.|str|It isn't defined in default.||
 
 - If a tag `{{ utility_registry_url }}/{{ utility_docker_image }}` exists before playbook execution, it is removed in playbook execution.
 
@@ -109,5 +111,7 @@ $ ansible-playbook docker/pull_image.yml -i tests/inventory/hosts -l test_host -
 |utility_registry_url|A repository url which a Docker image is pushed to.|localhost:5000||
 |utility_docker_image|a name of a target Docker image. This is a required variable.|It isn't defined in default.||
 |utility_docker_command_become|If the value is yes/true, docker command is executed with sudo.|bool|false|This is needed when Docker command execution needs root privilege.|
+|utility_docker_login_user|An username using 'docker login' command.|str|It isn't defined in default.||
+|utility_docker_login_password|A password using 'docker login' command.|str|It isn't defined in default.||
 
 - If a tag `{{ utility_registry_url }}/{{ utility_docker_image }}` exists before playbook execution, it is removed in playbook execution.
